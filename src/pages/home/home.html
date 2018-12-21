@@ -1,21 +1,29 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{teste}}</ion-title>
+    <ion-title>Lista</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-    <ion-item>
-      <ion-input type="text" [(ngModel)]="name" name="name"> placeholder="Username"></ion-input>      
-    </ion-item>
-    <ion-item>
-      <ion-label>{{nome}}</ion-label>
-    </ion-item>
-  </ion-list>
-  <button (click)="adicionar(name)" ion-button outline icon-start>
-    <ion-icon name='person-add' is-active="false"></ion-icon>
-    ADD
+  <form [formGroup]="person" #form="ngForm" (ngSubmit)="logForm(form)">
+  <ion-item>
+    <ion-label>Nome</ion-label>
+    <ion-input type="text" formControlName="nome"></ion-input>
+  </ion-item>
+  <button ion-button icon-only type="submit" [disabled]="!person.valid">
+    <ion-icon name="md-person-add"></ion-icon>
   </button>
-  
+</form>
+
+<ion-list class="lista-pessoas">  
+   
+  <ion-item-sliding *ngFor="let item of list">
+    <ion-item>{{ item.nome }}</ion-item>
+    <ion-item-options>
+      <button ion-button expandable (click)="logApagar(item)" icon-only>
+        <ion-icon name="trash"></ion-icon>Excluir
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
 </ion-content>
